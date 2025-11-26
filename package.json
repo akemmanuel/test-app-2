@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@capacitor/android": "^7.4.4",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/core": "^7.4.4",
     "@capacitor/geolocation": "^7.1.6",
     "@radix-ui/react-label": "^2.1.7",
