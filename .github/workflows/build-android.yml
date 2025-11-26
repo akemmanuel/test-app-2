@@ -2,7 +2,7 @@ name: Build Android with Bun
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   build:
