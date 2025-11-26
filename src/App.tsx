@@ -125,31 +125,18 @@
 
         const getCurrentLocation = async () => {
           try {
-            // Check permissions first
-            const permissionStatus = await Geolocation.checkPermissions();
-            console.log('Permission status:', permissionStatus);
+            console.log('Getting location from IP...');
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
             
-            if (permissionStatus.location !== 'granted') {
-              console.log('Requesting permissions...');
-              const requestStatus = await Geolocation.requestPermissions();
-              console.log('Request status:', requestStatus);
-              if (requestStatus.location !== 'granted') {
-                throw new Error("Standortberechtigung verweigert");
-              }
+            if (data.latitude && data.longitude) {
+              const locationName = data.city || `${data.latitude.toFixed(2)}, ${data.longitude.toFixed(2)}`;
+              await fetchWeather(data.latitude, data.longitude, locationName);
+            } else {
+              throw new Error("Konnte Standort nicht ermitteln");
             }
-
-            console.log('Getting current position...');
-            const position = await Geolocation.getCurrentPosition({
-              enableHighAccuracy: false,
-              timeout: 30000,
-              maximumAge: 300000
-            });
-            console.log('Position:', position);
-            
-            const { latitude, longitude } = position.coords;
-            await fetchWeather(latitude, longitude, "Aktueller Standort");
           } catch (err) {
-            console.error('Geolocation error:', err);
+            console.error('IP location error:', err);
             setError(`Standortfehler: ${err instanceof Error ? err.message : 'Unbekannter Fehler'}`);
             setLoading(false);
           }
