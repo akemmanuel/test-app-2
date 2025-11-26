@@ -1,4 +1,4 @@
-package com.test.app;
+package com.wetter.app;
 
 import com.getcapacitor.BridgeActivity;
 

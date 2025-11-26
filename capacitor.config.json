@@ -1,5 +1,5 @@
 {
-  "appId": "com.test.app",
-  "appName": "Wetter App",
+  "appId": "com.wetter.app",
+  "appName": "Wetter",
   "webDir": "dist"
 }

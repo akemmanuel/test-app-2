@@ -18,13 +18,6 @@ buildscript {
 apply from: "variables.gradle"
 
 allprojects {
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-allprojects {
     repositories {
         google()
         mavenCentral()
