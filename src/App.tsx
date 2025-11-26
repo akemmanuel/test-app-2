@@ -1,10 +1,11 @@
-   import { useState, useEffect } from "react";
-   import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-   import { Button } from "@/components/ui/button";
-   import { Input } from "@/components/ui/input";
-   import { Label } from "@/components/ui/label";
-   import { MapPin, RefreshCw, Cloud, Sun, CloudRain, Snowflake, Zap } from "lucide-react";
-   import "./index.css";
+    import { useState, useEffect } from "react";
+    import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+    import { Button } from "@/components/ui/button";
+    import { Input } from "@/components/ui/input";
+    import { Label } from "@/components/ui/label";
+    import { MapPin, RefreshCw, Cloud, Sun, CloudRain, Snowflake, Zap } from "lucide-react";
+    import { Geolocation } from '@capacitor/geolocation';
+    import "./index.css";
 
    interface WeatherData {
      current: {
@@ -122,24 +123,16 @@
        }
      };
 
-      const getCurrentLocation = () => {
-        if (!navigator.geolocation) {
-          setError("Geolocation wird nicht unterstützt");
-          setLoading(false);
-          return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            await fetchWeather(latitude, longitude, "Aktueller Standort");
-          },
-          (err) => {
-            setError("Standort konnte nicht ermittelt werden");
-            setLoading(false);
-          }
-        );
-      };
+       const getCurrentLocation = async () => {
+         try {
+           const position = await Geolocation.getCurrentPosition();
+           const { latitude, longitude } = position.coords;
+           await fetchWeather(latitude, longitude, "Aktueller Standort");
+         } catch (err) {
+           setError("Standort konnte nicht ermittelt werden");
+           setLoading(false);
+         }
+       };
 
       // Load weather on mount using current location
       useEffect(() => {
