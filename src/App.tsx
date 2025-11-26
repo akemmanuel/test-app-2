@@ -128,7 +128,7 @@
             console.log('Getting location from IP...');
             const response = await fetch('https://ipapi.co/json/');
             const data = await response.json();
-            
+
             if (data.latitude && data.longitude) {
               const locationName = data.city || `${data.latitude.toFixed(2)}, ${data.longitude.toFixed(2)}`;
               await fetchWeather(data.latitude, data.longitude, locationName);
